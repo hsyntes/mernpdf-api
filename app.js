@@ -47,8 +47,6 @@ app.use(xss());
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// app.get("/", (req, res) => res.redirect("https://hsyntes.com"));
-
 app.get("/", (req, res) =>
   res.status(200).json({
     status: "success",
