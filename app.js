@@ -14,7 +14,7 @@ const errorController = require("./controllers/errorController");
 const app = express();
 
 // * Cors configuration
-const allowedOrigins = ["https://localhost:3000", "https://mernpdf.vercel.app"];
+const allowedOrigins = ["http://localhost:3000", "https://mernpdf.vercel.app"];
 
 app.use(
   cors({
@@ -47,12 +47,19 @@ app.use(xss());
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-app.get("/", (req, res) => res.redirect("https://hsyntes.com"));
+// app.get("/", (req, res) => res.redirect("https://hsyntes.com"));
+
+app.get("/", (req, res) =>
+  res.status(200).json({
+    status: "success",
+    data: "Welcome to the MERNpdf!",
+  })
+);
 
 // * Convert img to pdf
 app.post("/convert", upload.array("images", 10), (req, res) => {
   const images = req.files;
-  const pdfPath = "MERNpdf.pdf";
+  const pdfPath = "public/MERNpdf.pdf";
 
   const doc = new pdfkit();
 
@@ -70,7 +77,7 @@ app.post("/convert", upload.array("images", 10), (req, res) => {
         valign: "center",
       });
 
-      doc.addPage();
+      // doc.addPage();
     });
 
   doc.end();
